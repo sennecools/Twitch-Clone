@@ -1,10 +1,10 @@
-import { ScanFace } from 'lucide-react';
-import { getSelf } from './auth-service';
-import { db } from './db';
+import { getSelf } from '@/lib/auth-service';
+import { db } from '@/lib/db';
 
 export const isBlockedByUser = async (id: string) => {
 	try {
 		const self = await getSelf();
+
 		const otherUser = await db.user.findUnique({
 			where: { id },
 		});
@@ -77,7 +77,7 @@ export const unblockUser = async (id: string) => {
 	const self = await getSelf();
 
 	if (self.id === id) {
-		throw new Error('Cannot block yourself');
+		throw new Error('Cannot unblock yourself');
 	}
 
 	const otherUser = await db.user.findUnique({
